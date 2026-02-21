@@ -1,0 +1,110 @@
+{
+  "name": "My workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "vapi-webhook",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "3a13e2ea-9f60-43a3-b754-41057a270042",
+      "name": "Webhook",
+      "webhookId": "b0103664-aed1-473f-af2a-d8b8b9b181f3"
+    },
+    {
+      "parameters": {
+        "jsCode": "const msg = $input.first().json.body?.message;\n\n  if (msg?.type !== 'end-of-call-report') {\n    return [];\n  }\n\n  const outputs = msg?.structuredOutputs || {};\n  const firstKey = Object.keys(outputs)[0];\n  const result = firstKey ? (outputs[firstKey]?.result || {}) : {};\n\n  return [{\n    json: {\n      caller_name:    result?.caller_name ?? 'Unknown',\n      topic:          result?.topic ?? null,\n      summary:        msg?.summary || null,\n      action_items:   result?.action_items || null,\n      raw_transcript: msg?.artifact?.transcript ?? msg?.transcript ?? null,\n      status:         'new'\n    }\n  }];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        208,
+        0
+      ],
+      "id": "61b94393-9ae3-4d8a-bf76-8a10560b2a40",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://aurgbskshnvdhvmbihyt.supabase.co/rest/v1/intake_entries",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "apikey",
+              "value": "sb_publishable_RbOj6WcRj9MA69OePsZI1Q_iNLE8fba"
+            },
+            {
+              "name": "Authorization",
+              "value": "Bearer sb_publishable_RbOj6WcRj9MA69OePsZI1Q_iNLE8fba"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "Prefer",
+              "value": "return=minimal"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ $json }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        416,
+        0
+      ],
+      "id": "304d9e4b-0961-4d28-88a0-893625aad821",
+      "name": "HTTP Request"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "9c61a990-04d0-4702-a755-1742f9e01829",
+  "meta": {
+    "instanceId": "697789385e6af76a9993b45984be0c27e2513d7f9d1a72e9730116b6f3090a4f"
+  },
+  "id": "2oQQqZ6y0aJbBkfb",
+  "tags": []
+}
