@@ -33,17 +33,17 @@
     {
       "parameters": {
         "method": "POST",
-        "url": "https://aurgbskshnvdhvmbihyt.supabase.co/rest/v1/intake_entries",
+        "url": "https://YOUR_PROJECT.supabase.co/rest/v1/intake_entries",
         "sendHeaders": true,
         "headerParameters": {
           "parameters": [
             {
               "name": "apikey",
-              "value": "sb_publishable_RbOj6WcRj9MA69OePsZI1Q_iNLE8fba"
+              "value": "YOUR_SUPABASE_ANON_KEY"
             },
             {
               "name": "Authorization",
-              "value": "Bearer sb_publishable_RbOj6WcRj9MA69OePsZI1Q_iNLE8fba"
+              "value": "Bearer YOUR_SUPABASE_ANON_KEY"
             },
             {
               "name": "Content-Type",
