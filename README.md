@@ -176,7 +176,7 @@ internal-voice-intake/
 ## Local Setup
 
 ```bash
-git clone https://github.com/your-org/internal-voice-intake.git
+git clone https://github.com/Chweyaa/internal-voice-intake.git
 cd internal-voice-intake
 bun install
 cp .env.local.example .env.local   # fill in values below
